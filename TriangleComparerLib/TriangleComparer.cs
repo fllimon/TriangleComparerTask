@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TriangleComparerLib
 {
-    public class TriangleComparer : IComparable<double>
+    public class TriangleComparer : IComparable
     {
         #region =======------ PRIVATE DATA -------=======
 
@@ -54,7 +55,7 @@ namespace TriangleComparerLib
         {
             double p = GetSemiPerimetr();
 
-            _triangleSquare = Math.Sqrt(p * (p - _firstSide) * (p - _secondSide) * (p - _thirdSide));
+            _triangleSquare = Math.Round(Math.Sqrt(p * (p - _firstSide) * (p - _secondSide) * (p - _thirdSide)), 2);
         }
 
         private double GetSemiPerimetr()
@@ -70,6 +71,18 @@ namespace TriangleComparerLib
         public int CompareTo(double other)
         {
             return _triangleSquare.CompareTo(other);
+        }
+
+        public int CompareTo(object obj)
+        {
+            TriangleComparer triangle = obj as TriangleComparer;
+
+            if (triangle == null)
+            {
+                return -1;
+            }
+
+            return _triangleSquare.CompareTo(triangle.TriangleSquare);
         }
     }
 }
